@@ -1,25 +1,42 @@
 package com.ipiecoles.java.java230.model;
 
+import javax.persistence.*;
+
+import com.ipiecoles.java.java230.repository.EmployeRepository;
 import org.hibernate.annotations.Type;
 import org.joda.time.LocalDate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 import java.util.Objects;
+import java.util.Optional;
 
-public abstract class Employe {
+@Entity
+@Table(name = "employe")
+public /*abstract*/ class Employe {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
+	@Column(name = "nom")
 	private String nom;
-	
+
+	@Column(name = "prenom")
 	private String prenom;
 
+	@Column(name="matricule")
 	private String matricule;
 
 	@Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+	@Column(name="dateEmbauche")
 	private LocalDate dateEmbauche;
-	
+
+	@Column(name="salaire")
 	private Double salaire = Entreprise.SALAIRE_BASE;
-	
+
 	public Employe() {
 		
 	}
@@ -40,7 +57,7 @@ public abstract class Employe {
 		return Entreprise.NB_CONGES_BASE;
 	}
 	
-	public abstract Double getPrimeAnnuelle();
+	//public abstract Double getPrimeAnnuelle();
 
 	public void augmenterSalaire(Double pourcentage) {
 		this.salaire = this.getSalaire() * (1 + pourcentage);
