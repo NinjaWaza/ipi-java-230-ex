@@ -2,6 +2,11 @@ package com.ipiecoles.java.java230.model;
 
 import org.joda.time.LocalDate;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "commercial")
 public class Commercial extends Employe {
 
 	private Double caAnnuel = 0d;

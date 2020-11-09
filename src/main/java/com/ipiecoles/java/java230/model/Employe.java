@@ -14,8 +14,9 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "employe")
-public /*abstract*/ class Employe {
+public abstract class Employe {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

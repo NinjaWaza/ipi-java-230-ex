@@ -3,13 +3,18 @@ package com.ipiecoles.java.java230.model;
 import com.ipiecoles.java.java230.exceptions.TechnicienException;
 import org.joda.time.LocalDate;
 
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Entity
+@Table(name = "manager")
 public class Manager extends Employe {
 
+	//@Transient //Permet de ne pas chercher en db si cette attribut y est ou non (avant de mettre en place le one to many et many to one)
+	@OneToMany(mappedBy = "manager"/*, fetch = FetchType.EAGER*/) //default : lazy
 	private Set<Technicien> equipe = new HashSet();
 
 	public Manager(){

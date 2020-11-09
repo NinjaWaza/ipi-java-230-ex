@@ -1,7 +1,11 @@
 package com.ipiecoles.java.java230;
 
 import com.ipiecoles.java.java230.model.Employe;
+import com.ipiecoles.java.java230.model.Manager;
+import com.ipiecoles.java.java230.model.Technicien;
 import com.ipiecoles.java.java230.repository.EmployeRepository;
+import com.ipiecoles.java.java230.repository.ManagerRepository;
+import com.ipiecoles.java.java230.repository.TechnicienRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.data.domain.Page;
@@ -18,19 +22,33 @@ public class MyRunner implements CommandLineRunner {
     @Autowired
     private EmployeRepository employeRepository;
 
+    @Autowired
+    private TechnicienRepository technicienRepository;
+
+    @Autowired
+    private ManagerRepository managerRepository;
     @Override
     public void run(String... strings) throws Exception {
         Optional<Employe> employe = employeRepository.findById(5L);
-        if(employe.isEmpty()){
-            System.out.println("Employé non trouvé");
-        } else {
+//        if(employe.isEmpty()){
+//              System.out.println("Employé non trouvé");
+//        } else {
+//            Employe e = employe.get();
+//            e.setNom("DAVID");
+//            e = employeRepository.save(e);
+//            System.out.println(e.toString());
+//        }
+
+        if(employe.isEmpty()){System.out.println("Employé non trouvé");}
+        else {
             Employe e = employe.get();
             e.setNom("DAVID");
             e = employeRepository.save(e);
-
             System.out.println(e.toString());
-
         }
+
+
+
         PageRequest pageRequest = PageRequest.of(0,10, Sort.Direction.ASC, "salaire");
         Page<Employe> page = employeRepository.findByNomIgnoreCase("Andre", pageRequest);
         //Page<Employe> page = employeRepository.findAll(pageRequest);
@@ -54,6 +72,17 @@ public class MyRunner implements CommandLineRunner {
 //
 //        for(Employe e : employeRepository.findAll())
 //            System.out.println(e.toString());
+
+
+        for(Technicien e : technicienRepository.findAll()){
+            System.out.println(e.getManager().toString());
+        }
+        Manager m = managerRepository.findOneWithEquipeById(11L);
+        for(Technicien t : m.getEquipe()){
+            System.out.println(m.getMatricule() + " " + t.toString());
+        }
+
+
     }
 
     public static void print(Object t) {
